@@ -269,17 +269,17 @@ How to get help
 ## Mermaid Diagram Examples
 ```markdown
 ## System Architecture
-\`\`\`mermaid
+```mermaid
 graph TD
     A[Client] --> B[nginx]
     B --> C[PHP-FPM]
     C --> D[WordPress]
     D --> E[MySQL]
     D --> F[Redis Cache]
-\`\`\`
+```
 
 ## Sequence Diagram
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     User->>nginx: HTTP Request
     nginx->>PHP-FPM: FastCGI Request
@@ -289,7 +289,7 @@ sequenceDiagram
     WordPress-->>PHP-FPM: Response
     PHP-FPM-->>nginx: HTML
     nginx-->>User: HTTP Response
-\`\`\`
+```
 ```
 </diagram_types>
 
