@@ -20,9 +20,11 @@ The system solves a critical challenge in AI-assisted development: maintaining c
 
 ## Architecture Overview
 
-The Orchestra system consists of four specialized agents:
+The Orchestra system consists of four core agents for the TDD workflow, plus four additional specialized subagents:
 
-### Conductor Agent
+### Core Agents
+
+#### Conductor Agent
 - `Conductor.agent.md` - Main orchestration agent that manages the complete development cycle.
     - Coordinates Planning, Implementation, and Code Review subagents.
     - Generates the plan to be followed.
@@ -30,26 +32,35 @@ The Orchestra system consists of four specialized agents:
     - Enforces the Planning → Implementation → Review → Commit cycle.
     - Uses Claude Sonnet 4.5 by default.
 
-### Planning Subagent
+#### Planning Subagent
 - **`planning-subagent.agent.md`** - Research and context gathering specialist.
     - Analyzes codebase structure and patterns.
     - Identifies relevant files and functions.
     - Returns structured findings to inform plan creation.
     - Uses Claude Sonnet 4.5 by default.
 
-### Implementation Subagent
+#### Implementation Subagent
 - **`implement-subagent.agent.md`** - Implementation specialist following TDD conventions.
     - Executes individual phases of the development plan.
     - Writes failing tests first, then minimal code to pass.
     - Works autonomously within phase boundaries.
     - Uses Claude Haiku 4.5 by default for premium request efficiency.
 
-### Code Review Subagent
+#### Code Review Subagent
 - **`code-review-subagent.agent.md`** - Quality assurance specialist.
     - Reviews uncommitted code changes using git to identify new code.
     - Validates test coverage and code quality.
     - Returns review results back to Conductor (`APPROVED/NEEDS_REVISION/FAILED`).
     - Uses Claude Sonnet 4.5 by default.
+
+### Specialized Subagents
+
+The repository also includes four additional specialized subagents that can be invoked by the Conductor or used independently:
+
+- **`deployment-subagent.agent.md`** - Deployment configuration specialist for WordPress, Docker, nginx, PHP-FPM environments
+- **`security-audit-subagent.agent.md`** - Security analysis and vulnerability assessment specialist  
+- **`performance-optimization-subagent.agent.md`** - Performance optimization specialist for code and infrastructure
+- **`documentation-subagent.agent.md`** - Documentation generation specialist for code, APIs, and systems
 
 ## Prerequisites
 
@@ -94,11 +105,15 @@ The GitHub Copilot Orchestra uses custom chat modes in VSCode Insiders to enable
     code-insiders .
     ```
 
-2. **Locate Agent Files** - The repository includes four `.agent.md` files in the root directory:
-    - `Conductor.agent.md`
-    - `planning-subagent.agent.md`
-    - `implement-subagent.agent.md`
-    - `code-review-subagent.agent.md`
+2. **Locate Agent Files** - The repository includes eight `.agent.md` files in the root directory:
+    - `Conductor.agent.md` - Main orchestration agent
+    - `planning-subagent.agent.md` - Research and context gathering
+    - `implement-subagent.agent.md` - Implementation specialist
+    - `code-review-subagent.agent.md` - Quality assurance
+    - `deployment-subagent.agent.md` - Deployment configurations
+    - `security-audit-subagent.agent.md` - Security analysis
+    - `performance-optimization-subagent.agent.md` - Performance optimization
+    - `documentation-subagent.agent.md` - Documentation generation
 
 3. **Install the agent files**
     - **Copy the `.agent.md` files to your project's root directory**
@@ -417,11 +432,19 @@ You can create specialized subagents for your workflow:
 3. **Update Conductor** to invoke your new subagent where appropriate.
 4. **Test the integration** with a sample task.
 
-**Ideas for subagents:**
-- **deployment-subagent** - Specialized in deployment configurations.
-- **security-audit-subagent** - Focused on security analysis.
-- **performance-optimization-subagent** - Optimizes code performance.
-- **documentation-subagent** - Generates comprehensive documentation.
+**Additional Subagents Included:**
+
+This repository includes several specialized subagents ready to use:
+
+- **deployment-subagent** (`deployment-subagent.agent.md`) - Specialized in deployment configurations for WordPress, Docker, nginx, PHP-FPM stack. Handles containerization, web server setup, caching strategies, and deployment automation.
+
+- **security-audit-subagent** (`security-audit-subagent.agent.md`) - Focused on security analysis and vulnerability assessment. Reviews WordPress security, PHP vulnerabilities, web server configurations, and dependency security. Provides detailed security reports with prioritized remediation steps.
+
+- **performance-optimization-subagent** (`performance-optimization-subagent.agent.md`) - Optimizes code and infrastructure performance. Specializes in OPcache tuning, nginx caching, PHP-FPM optimization, database query optimization, and WordPress performance improvements.
+
+- **documentation-subagent** (`documentation-subagent.agent.md`) - Generates comprehensive documentation for code, APIs, and technical systems. Creates user guides, technical documentation, code comments, and architecture documentation.
+
+These subagents can be invoked by the Conductor agent or used independently for specialized tasks. Each follows the same setup process as the core subagents - simply copy the `.agent.md` file to your workspace or User Data directory.
 
 ## License
 
